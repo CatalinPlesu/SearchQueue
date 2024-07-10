@@ -5,7 +5,7 @@
 This plugin is meant to reduce the distractions on the internet. When you want to search something it will save the query in a queue or stack for later search if it is truly an important thing to search.
 
 
-### Features
+### Features, and TODO
 - [x] Enable checkbox
 - [x] Intercept search query in address bar
 - [x] Pages with all queryes
@@ -18,3 +18,4 @@ This plugin is meant to reduce the distractions on the internet. When you want t
 - [ ] Reopen the query page after intercept
 - [ ] Fix bug: new tap is the query page even if extension is disabled
 - [ ] Improve UI
+- [ ] Fix bug: no feedback after the page has been added to the queue
