@@ -184,8 +184,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleRemove(index) {
-    // Implement removal logic here
-    console.log('Removing query at index:', index);
+    // Retrieve search queries from storage
+    browser.storage.local.get('searchQueries').then((data) => {
+      const searchQueries = data.searchQueries || [];
+
+      // Remove query at specified index
+      searchQueries.splice(index, 1);
+
+      // Save updated queries back to storage
+      browser.storage.local.set({ searchQueries }).then(() => {
+        console.log(`Query at index ${index} removed successfully.`);
+        renderSearchQueries(searchQueries); // Update UI after removal
+      }).catch((error) => {
+        console.error('Failed to remove query:', error);
+      });
+    }).catch((error) => {
+      console.error('Error retrieving search queries for removal:', error);
+    });
   }
 
   function updateQuery(index, newQuery) {
@@ -228,6 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
             query: query
           }).then(() => {
             console.log(`Search performed on ${engine.name} for query "${query}"`);
+            // Remove query from UI if checkbox is checked
+            const removeAfterSearchCheckbox = document.getElementById('removeAfterSearch');
+            if (removeAfterSearchCheckbox.checked) {
+              handleRemove(index); // Remove the query from storage and UI
+            }
           }).catch((error) => {
             console.error(`Error performing search on ${engine.name} for query "${query}":`, error);
           });
