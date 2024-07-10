@@ -23,7 +23,7 @@
     "default_icon": {
       "48": "icons/queue-48.png"
     },
-    "default_title": "Enable SearchQueue",
+    "default_title": "SearchQueue",
     "default_popup": "popup.html"
   },
   "chrome_url_overrides": {
