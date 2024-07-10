@@ -66,12 +66,21 @@ body, html {
     cursor: pointer;
   }
   
-  .save-button, .cancel-button {
+  .save-button {
     background-color: #4CAF50;
     color: white;
   }
   
-  .save-button:hover, .cancel-button:hover {
+  .save-button:hover {
     background-color: #45a049;
+  }
+  
+  .cancel-button {
+    background-color: #ff3F50;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #990c1d;
   }
   
