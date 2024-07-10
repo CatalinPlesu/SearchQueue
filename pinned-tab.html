@@ -5,70 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Queue</title>
   <link rel="icon" type="image/png" href="icons/queue-48.png">
-  <style>
-    /* Add your CSS styles here */
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    header img {
-      width: 48px; /* Adjust icon size as needed */
-      height: 48px;
-      margin-right: 10px;
-    }
-    header h1 {
-      font-size: 24px;
-      margin: 0;
-    }
-    #searchList {
-      /* Add styling for the search list container */
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    td button {
-      margin-right: 5px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <img src="icons/queue-48.png" alt="Extension Icon">
-    <h1>Search Queue</h1>
-  </header>
-  <main>
-    <table>
-      <thead>
-        <tr>
-          <th>Timestamp</th>
-          <th>Search Engine</th>
-          <th>Query</th>
-          <th>Edit Query</th>
-          <th>Remove</th>
-          <th>Search</th>
-        </tr>
-      </thead>
-      <tbody id="searchList">
-        <!-- Search queries will be dynamically added here -->
-      </tbody>
+  <div class="container">
+    <div class="settings">
+      <label>
+        <input type="checkbox" id="removeAfterSearch" checked>
+        Remove items after search
+      </label>
+
+      <label>
+        Ordering:
+        <select id="orderingOptions">
+          <option value="queue">Queue</option>
+          <option value="stack">Stack</option>
+        </select>
+      </label>
+
+      <button id="clearQueueButton">Clear Queue</button>
+    </div>
+
+    <table id="searchList">
+      <!-- Search query rows will be dynamically added here -->
     </table>
-  </main>
-  
+  </div>
+
   <script src="pinned-tab.js"></script>
 </body>
 </html>

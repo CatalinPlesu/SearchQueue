@@ -184,8 +184,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleRemove(index) {
-    // Implement removal logic here
-    console.log('Removing query at index:', index);
+    browser.storage.local.get('searchQueries').then((data) => {
+      let searchQueries = data.searchQueries || [];
+      searchQueries = searchQueries.filter((_, i) => i !== index);
+
+      // Save updated search queries to storage
+      browser.storage.local.set({ searchQueries }).then(() => {
+        console.log(`Search query at index ${index} removed.`);
+        renderSearchQueries(searchQueries);
+      }).catch((error) => {
+        console.error('Failed to remove search query:', error);
+      });
+    }).catch((error) => {
+      console.error('Error retrieving search queries for removal:', error);
+    });
   }
 
   function updateQuery(index, newQuery) {
@@ -238,4 +250,47 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error retrieving search engines:', error);
     });
   }
+
+  // Settings handling
+  const removeAfterSearchCheckbox = document.getElementById('removeAfterSearch');
+  const orderingSelect = document.getElementById('orderingOptions'); // Changed from 'ordering' to 'orderingOptions'
+
+  browser.storage.local.get(['removeAfterSearch', 'ordering']).then((data) => {
+    const { removeAfterSearch, ordering } = data;
+    removeAfterSearchCheckbox.checked = removeAfterSearch || false;
+    orderingSelect.value = ordering || 'queue';
+  }).catch((error) => {
+    console.error('Error retrieving settings:', error);
+  });
+
+  removeAfterSearchCheckbox.addEventListener('change', (event) => {
+    const isChecked = event.target.checked;
+    browser.storage.local.set({ removeAfterSearch: isChecked }).then(() => {
+      console.log('Setting removeAfterSearch updated:', isChecked);
+    }).catch((error) => {
+      console.error('Failed to update setting removeAfterSearch:', error);
+    });
+  });
+
+  orderingSelect.addEventListener('change', (event) => {
+    const value = event.target.value;
+    browser.storage.local.set({ ordering: value }).then(() => {
+      console.log('Setting ordering updated:', value);
+    }).catch((error) => {
+      console.error('Failed to update setting ordering:', error);
+    });
+  });
+
+  // Clear entire search queue
+  const clearQueueButton = document.getElementById('clearQueueButton'); // Changed from 'clearQueue' to 'clearQueueButton'
+  clearQueueButton.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear the entire search queue?')) {
+      browser.storage.local.set({ searchQueries: [] }).then(() => {
+        console.log('Search queue cleared.');
+        renderSearchQueries([]);
+      }).catch((error) => {
+        console.error('Failed to clear search queue:', error);
+      });
+    }
+  });
 });
