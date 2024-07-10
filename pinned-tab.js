@@ -7,9 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Error loading search queries:', error);
   });
 
+  // Handle change in ordering options
+  const orderingOptions = document.getElementById('orderingOptions');
+  orderingOptions.addEventListener('change', () => {
+    browser.storage.local.get('searchQueries').then((data) => {
+      const searchQueries = data.searchQueries || [];
+      renderSearchQueries(searchQueries);
+    }).catch((error) => {
+      console.error('Error loading search queries:', error);
+    });
+  });
+
   function renderSearchQueries(queries) {
     const searchList = document.getElementById('searchList');
     searchList.innerHTML = ''; // Clear existing content
+
+    const ordering = orderingOptions.value; // Get current ordering option
+
+    if (ordering === 'stack') {
+      queries = queries.slice().reverse(); // Reverse the array for stack ordering
+    }
 
     queries.forEach((query, index) => {
       const row = createSearchRow(query, index);
