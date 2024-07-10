@@ -18,6 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Event listener for the Clear Queue button
+  const clearQueueButton = document.getElementById('clearQueueButton');
+  clearQueueButton.addEventListener('click', () => {
+    // Clear search queries from storage
+    browser.storage.local.set({ searchQueries: [] }).then(() => {
+      console.log('Search queries cleared.');
+      renderSearchQueries([]); // Update UI to reflect empty list
+    }).catch((error) => {
+      console.error('Failed to clear search queries:', error);
+    });
+  });
+
   function renderSearchQueries(queries) {
     const searchList = document.getElementById('searchList');
     searchList.innerHTML = ''; // Clear existing content

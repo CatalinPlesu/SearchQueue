@@ -14,7 +14,7 @@ This plugin is meant to reduce the distractions on the internet. When you want t
 - [x] Remove query
 - [x] Remove query on search
 - [x] Order list as queue or stack
-- [ ] Remove all items
+- [x] Remove all items
 - [ ] Reopen the query page after intercept
 - [ ] Fix bug: new tap is the query page even if extension is disabled
 - [ ] Improve UI
