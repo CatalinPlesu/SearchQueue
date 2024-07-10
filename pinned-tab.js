@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchEngineSelect = document.createElement('select');
     searchEngineSelect.id = `searchEngine${index}`;
     populateSearchEngines(`searchEngine${index}`, query.searchEngine);
+    searchEngineSelect.addEventListener('change', () => handleSearchEngineChange(index, searchEngineSelect.value));
     searchEngineCell.appendChild(searchEngineSelect);
     row.appendChild(searchEngineCell);
 
@@ -163,6 +164,23 @@ document.addEventListener('DOMContentLoaded', () => {
     removeButton.classList.remove('cancel-button');
     removeButton.removeEventListener('click', handleCancel);
     removeButton.addEventListener('click', () => handleRemove(index));
+  }
+
+  function handleSearchEngineChange(index, selectedEngine) {
+    // Update selected search engine in memory
+    browser.storage.local.get('searchQueries').then((data) => {
+      const searchQueries = data.searchQueries || [];
+      searchQueries[index].searchEngine = selectedEngine;
+
+      // Save updated search engine to storage
+      browser.storage.local.set({ searchQueries }).then(() => {
+        console.log(`Search engine at index ${index} updated to "${selectedEngine}"`);
+      }).catch((error) => {
+        console.error('Failed to update search engine:', error);
+      });
+    }).catch((error) => {
+      console.error('Error retrieving search queries for search engine update:', error);
+    });
   }
 
   function handleRemove(index) {
