@@ -1,5 +1,7 @@
 # SearchQueue
 
+# Warning!!! this plugin is generated 99% with chatgpt
+
 This plugin is meant to reduce the distractions on the internet. When you want to search something it will save the query in a queue or stack for later search if it is truly an important thing to search.
 
 
